@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>用户信息修改</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+		<style>
+			.aui-input-row {
+				width: 100%;
+			}
+			#content {
+				height: 150px;
+			}
+			.aui-form {
+				margin-bottom: 10px;
+			}
+			.hidden_ico{
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+		<div id="header">
+			<a class="back-icon" tapmode="" onclick="api.closeWin()"></a>
+			<h1>个人信息</h1>
+		</div>
+		<div class="aui-form" id="userinfo">
+		<!--script id="user-edit-template" type="text/x-dot-template"-->
+			<div class="aui-input-row aui-success">
+				<label class="aui-input-addon">用户名</label>
+				<input type="text" id="username" class="aui-input" placeholder="请输入用户名" value="{{=it.username}}">
+			</div>
+			<div class="aui-input-row">
+				<span class="aui-input-addon">手机号</span>
+				<input type="number" id="mobile" class="aui-input" placeholder="请输入手机号" value="{{=it.mobile|| ''}}">
+			</div>
+			<div class="aui-input-row">
+				<span class="aui-input-addon">昵称</span>
+				<input type="text" id="nickname" class="aui-input" placeholder="请输入昵称" value="{{=it.nickname|| ''}}">
+			</div>
+			<div class="aui-input-row">
+				<span class="aui-input-addon">年龄</span>
+				<div class="aui-range">
+					<input type="range" id="age" class="aui-range-primary" value="{{=it.age|| ''}}" max="100" min="1" step="1" />
+				</div>
+			</div>
+			<div class="aui-input-row">
+				<span class="aui-input-addon">邮箱</span>
+				<input type="email" id="email" class="aui-input" placeholder="******@email.com" value="{{=it.email|| ''}}">
+			</div>
+			<div class="aui-input-row">
+				<span class="aui-input-addon">个人网站</span>
+				<input type="url" id="url" class="aui-input" placeholder="http://" value="{{=it.url|| ''}}">
+			</div>
+			<div class="aui-btn-row">
+				<div class="aui-btn aui-btn-success" onclick="confirm()">
+					确认
+				</div>
+				<div class="aui-btn aui-btn-warning" onclick="return false;">
+					取消
+				</div>
+			</div>
+		<!--/script-->	
+		</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/hammer.min.js"></script>
+	<script type="text/javascript" src="../../script/aui-range.js" ></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/user_edit.js"></script>
+
+</html>

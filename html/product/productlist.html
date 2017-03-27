@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>预约</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/Hui.css"/>
+	</head>
+	<body>
+		<div class="aui-tab aui-tab-dark">
+			<ul class="aui-tab-nav" id="tabinfo"></ul>
+		</div>
+		<div class="aui-content" id="activitylistInfo">
+		</div>
+		<div class="H-font-size-14 H-clear-both H-width-100-percent H-display-table H-box-sizing-border-box H-padding-horizontal-left-5" id="productlistinfo">
+		</div>
+	</body>
+	<!--script id="tabinfo-template" type="text/x-dot-template">
+		{{for(var i=0; i< it.length; i++){}}
+		{{? i === 0}}
+		<li class="active" data-id="{{=it[i].id}}" tapmode="hover" onclick="goNavTab(this);">
+		{{??}}
+		<li  data-id="{{=it[i].id}}" tapmode="hover" onclick="goNavTab(this);">
+		{{?}}
+		{{=it[i].name}}
+		</li>
+		{{}}}
+	</script>
+	<script id="activity-template" type="text/x-dot-template">
+		{{for(var i=0; i< it.length; i++){}}
+		<div tapmode="" onclick="showDetail('{{=it[i].num_iid}}' ,'{{=it[i].link}}');" class="H-line-height-0">
+		<img src="{{=it[i].picture.url}}" class="H-width-100-percent ">
+		</div>
+		<div class="H-flexbox-vertical H-vertical-middle H-font-size-12 H-padding-horizontal-both-10 H-padding-vertical-both-8 H-theme-background-color-white">
+		<div class="H-flex-item H-text-align-left">
+		<span class="H-theme-background-color2 H-theme-font-color-white H-padding-horizontal-both-5 H-padding-vertical-both-3 H-border-radius-3">{{=it[i].intro}}</span>
+		</div>
+		<div class="H-flex-item H-text-align-right H-font-weight-bold H-font-size-12 H-theme-font-color-666">
+		<span class="H-theme-font-color7 ">{{=it[i].saleNum}}</span>件已售<span class="H-theme-font-color7 H-margin-horizontal-left-8">仅剩10小时</span>
+		</div>
+		</div>
+		<div class="H-padding-vertical-bottom-5"></div>
+		{{}}}
+	</script>
+	<script id="product-template" type="text/x-dot-template">
+		{{for(var i=0; i< it.length; i++){}}
+		<div tapmode="" onclick="showDetail('{{=it[i].num_iid}}', '{{=it[i].click_url}}');" class=" H-display-table-cell H-float-left H-box-sizing-border-box H-width-avg-2 H-margin-vertical-bottom-5">
+		<div class="H-theme-background-color-white H-margin-horizontal-right-5">
+		<img src="{{=it[i].pict_url}}" class="H-width-100-percent H-display-block" alt="" title="" />
+		<div class="H-padding-horizontal-both-3 H-text-show-row-2 H-padding-vertical-top-5">
+		{{=it[i].title}}
+		</div>
+		<div class="H-padding-horizontal-both-3 H-flex-item H-theme-font-color7 H-text-align-left H-vertical-middle">
+		￥<span class="H-font-size-15 H-margin-horizontal-right-25">{{=it[i].zk_final_price}}</span><span class="H-theme-font-color-999 H-font-size-12" style="text-decoration:line-through">原价：{{=it[i].reserve_price}}</span>
+		</div>
+		</div>
+		</div>
+		{{}}}
+	</script-->
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript">
+		var model, query, today, taobao;
+		apiready = function() {
+			taobao = api.require("taobao");
+			var d = new Date();
+			today = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+			api.parseTapmode();
+			api.showProgress({
+				style : 'default',
+				animationType : 'zoom',
+				title : '努力加载中...',
+				text : '请稍后...',
+				modal : true
+			});
+			query = api.require("query");
+			model = api.require("model");
+			getTabs();
+			api.setRefreshHeaderInfo({
+				visible : true,
+				// loadingImgae: 'wgt://image/refresh-white.png',
+				bgColor : '#f2f2f2',
+				textColor : '#4d4d4d',
+				textDown : '下拉刷新...',
+				textUp : '松开刷新...',
+				showTime : true
+			}, function(ret, err) {
+				getTabs();
+				api.refreshHeaderLoadDone();
+			});
+			api.hideProgress();
+		};
+		function getTabs() {
+			if (api.connectionType == 'none') {
+				if ($api.getStorage('product_category_tab')) {
+					tabEachData($api.getStorage('product_category_tab'));
+				} else {
+					$api.toast('网络错误，请检查');
+				}
+			} else {
+				planTabInt();
+			}
+		}
+
+		function planTabInt(body) {
+			api.showProgress({
+				style : 'default',
+				animationType : 'zoom',
+				title : '努力加载中...',
+				text : '请稍后...',
+				modal : true
+			});
+			window.product_category = factory("product_category");
+			product_category.query({
+				filter : {
+					fields : {
+						id : true,
+						name : true
+					},
+					limit : 10,
+					skip : 0,
+					order : "sort ASC"
+				}
+			}, function(ret, err) {
+				if (ret) {
+					$api.setStorage('product_category_tab', JSON.stringify(ret));
+					//每一次都缓存到本地一次数据
+					tabEachData(ret);
+				} else {
+					if ($api.getStorage('product_category_tab')) {
+						tabEachData($api.getStorage('product_category_tab'));
+					}
+					$api.toast(err.msg, 5000);
+				}
+				api.hideProgress();
+			});
+		}
+
+		function tabEachData(ret) {
+			if ( typeof ret === 'string') {//如果是本地的数据一定是 String类型 必须转成JSON对象
+				ret = JSON.parse(ret);
+			}
+			var tabinfo = $api.byId("tabinfo");
+			var tpl = $api.byId("tabinfo-template").text;
+			var tempFn = doT.template(tpl);
+			tabinfo.innerHTML = tempFn(ret);
+			goNavTab($api.dom("#tabinfo li.active"));
+		}
+
+		function goNavTab(obj) {
+			$api.removeCls($api.dom("#tabinfo li.active"), 'active');
+			$api.addCls(obj, 'active');
+			var activitylistInfo = $api.byId("activitylistInfo");
+			var productlistInfo = $api.byId("productlistinfo");
+			
+			query.createQuery({
+			}, function(ret, err) {
+				if (ret && ret.qid) {
+					var queryId = ret.qid;
+					if (obj.innerHTML !== "全部") {
+						query.whereLike({
+							qid : queryId,
+							column : 'type',
+							value : obj.innerHTML
+						});
+					}
+					query.whereEqual({
+						qid : queryId,
+						column : 'status',
+						value : true
+					});
+					query.limit({
+						qid : queryId,
+						value : 2
+					});
+					query.asc({
+						qid : queryId,
+						column : 'sort'
+					});
+					model.findAll({
+						class : 'activity',
+						qid : queryId
+					}, function(ret, err) {
+						if (ret) {
+							var tpl = $api.byId("activity-template").text;
+							var tempFn = doT.template(tpl);
+							activitylistInfo.innerHTML = tempFn(ret);
+							$api.setStorage(today + obj.innerHTML + "activitylist", tempFn(ret));
+						}
+					})
+				}
+			});
+			query.createQuery({
+			}, function(ret, err) {
+				if (ret && ret.qid) {
+					var queryId = ret.qid;
+					if (obj.innerHTML !== "全部") {
+						query.whereLike({
+							qid : queryId,
+							column : 'category',
+							value : obj.innerHTML
+						});
+					}
+//					query.whereGreaterThan({
+//						qid : queryId,
+//						column : 'event_start_time',
+//						value : today
+//					});
+//					query.whereLessThan({
+//						qid : queryId,
+//						column : 'event_end_time',
+//						value : today
+//					});
+					model.findAll({
+						class : 'tbk_product',
+						qid : queryId
+					}, function(ret, err) {
+						var tpl = $api.byId("product-template").text;
+						var tempFn = doT.template(tpl);
+						productlistInfo.innerHTML = tempFn(ret);
+						$api.setStorage(today + obj.innerHTML + "productlistInfo", tempFn(ret));
+					});
+				}
+			});
+			//缓存数据
+			//			if ($api.getStorage(today + obj.innerHTML + "activitylist")) {
+			//				activitylistInfo.innerHTML = $api.getStorage(today + obj.innerHTML + "activitylist");
+			//			} else {
+			//				query.createQuery({
+			//				}, function(ret, err) {
+			//					if (ret && ret.qid) {
+			//						var queryId = ret.qid;
+			//						alert(obj.innerHTML);
+			//						if (obj.innerHTML !== "全部") {
+			//							query.whereLike({
+			//								qid : queryId,
+			//								column : 'type',
+			//								value : obj.innerHTML
+			//							});
+			//						}
+			//						query.whereEqual({
+			//							qid : queryId,
+			//							column : 'status',
+			//							value : true
+			//						});
+			//						query.limit({
+			//							qid : 'queryId',
+			//							value : '10'
+			//						});
+			//						query.asc({
+			//							qid : 'queryId',
+			//							column : 'sort'
+			//						});
+			//						model.findAll({
+			//							class : 'activity',
+			//							qid : queryId
+			//						}, function(ret, err) {
+			//							if (ret) {
+			//								var tpl = $api.byId("activity-template").text;
+			//								var tempFn = doT.template(tpl);
+			//								activitylistInfo.innerHTML = tempFn(ret);
+			//								alert(activitylistInfo.innerHTML);
+			//								$api.setStorage(today + obj.innerHTML + "activitylist", tempFn(ret));
+			//							}
+			//						})
+			//					}
+			//				});
+			//			}
+		}
+
+		function showDetail(itemid, url) {
+			var param = "";
+			if (itemid !== "") {
+				param = {
+					itemId : itemid
+				};
+				taobao.showItemDetailPage(param);
+			} else if (url !== "") {
+				param = {
+					url : url
+				};
+				taobao.showPageByUrl(param);
+			} else {
+				api.toast({
+					msg : '操作错误请稍后再试！'
+				});
+			}
+		}
+	</script>
+</html>

@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>注册</title>
+		<link href="../../css/Hui.css" rel="stylesheet" type="text/css" />
+		<style type="text/css">
+			body {
+				background: url(../../image/login_bg.jpg) no-repeat left top;
+				background-size: cover;
+			}
+		</style>
+	</head>
+	<body class="H-height-100-percent H-box-sizing-border-box">
+		<div class="fix">
+			<div class="H-horizontal-center H-padding-vertical-both-25">
+				<div class="H-text-align-center">
+					<img src="../../image/userTitle.png" class="H-border-radius-12 H-margin-vertical-top-10" style="width:80px;height:80px;" />
+					<div class="H-font-size-18">
+						注册
+					</div>
+				</div>
+			</div>
+			<div class="H-border-vertical-top-after H-margin-vertical-top-20">
+				<div class="H-flexbox-horizontal  H-border-vertical-bottom-margin-both-10-after">
+					<span class="H-icon H-vertical-middle H-padding-horizontal-left-10"><i class="H-iconfont H-icon-phone H-font-size-18 H-vertical-middle H-theme-font-color-999"></i></span>
+					<input type="username" id="username" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-15 H-theme-background-color-transparent" onblur="checkPhoneConflict()" placeholder="请输入手机号码" />
+				</div>
+				<div class="H-flexbox-horizontal H-border-vertical-bottom-margin-both-10-after">
+					<span class="H-icon H-vertical-middle H-padding-horizontal-left-10"><i class="H-iconfont H-icon-lock H-font-size-18 H-vertical-middle H-theme-font-color-999"></i></span>
+					<input type="password" id="password" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-15 H-theme-background-color-transparent" placeholder="请输入密码" />
+				</div>
+				<div class="H-flexbox-horizontal H-border-vertical-bottom-after">
+					<span class="H-icon H-vertical-middle H-padding-horizontal-left-10"><i class="H-iconfont H-icon-lock H-font-size-18 H-vertical-middle H-theme-font-color-999"></i></span>
+					<input type="password" id="password2" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-15 H-theme-background-color-transparent" placeholder="请再次输入密码" />
+				</div>
+				<div class="H-flexbox-horizontal H-border-vertical-bottom-margin-both-10-after">
+					<span class="H-icon H-vertical-middle H-padding-horizontal-left-10"><i class="H-iconfont H-icon-msg H-font-size-18 H-vertical-middle H-theme-font-color-999"></i></span>
+					<input type="code" id="code" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-15 H-theme-background-color-transparent" placeholder="请输入短信验证码" />
+					<a id="sendSms" class="H-vertical-middle H-padding-horizontal-right-10  H-theme-font-color1 H-font-size-14" onclick="sendSms(this)">获取验证码</a>
+				</div>
+				<div class="H-padding-15 H-margin-vertical-top-10">
+					<button class="H-button H-width-100-percent  H-font-size-15 H-outline-none H-padding-vertical-both-15 H-padding-horizontal-both-20 H-theme-background-color9 H-theme-font-color-white H-theme-border-color9 H-theme-border-color9-click H-theme-background-color9-click H-theme-font-color9-click H-border-radius-3" onclick ="verify()">
+						提交注册
+					</button>
+				</div>
+				<div class="H-margin-horizontal-both-15">
+					<span class="H-theme-font-color1 H-float-left H-font-size-14">
+						<input type="checkbox" class="H-checkbox H-checkbox-null H-vertical-align-middle H-font-size-18 H-theme-font-color1 H-border-radius-circle" checked="checked" style="-webkit-transform: scale(0.6); -webkit-transform-origin: 0 38%;" />
+						<label style="position:relative;left:-10px;">《啄木鸟用户注册协议》</label></span>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/common.js"></script>
+		<script type="text/javascript" src="../../script/hashes.min.js"></script>
+		<script type="text/javascript" src="../../script/ajaxToRongCloud.js"></script>
+		<script type="text/javascript" src="../../script/winu-base.js"></script>
+		<script type="text/javascript" defer></script>
+		<script type="text/javascript">
+			var smsVerify = null;
+			var isExist = null;
+			apiready = function() {
+				smsVerify = api.require('smsVerify');
+				// 初始化
+				register();
+			};
+			// 注册，初始化
+			function register() {
+				smsVerify.register(function(ret, err) {
+					if (ret.status) {
+						console.log('注册成功');
+					} else {
+						api.alert({
+							msg : err.code + ' 注册失败'
+						});
+					}
+				});
+			}
+
+			//========离开用户名输入框的时候检查是否用户账号被注册======>>>>>
+			function checkPhoneConflict() {
+				var username = $api.byId("username").value;
+				var query = api.require('query');
+				query.createQuery({
+				}, function(ret, err) {
+					var queryId = ret.qid;
+					query.whereEqual({
+						qid : queryId,
+						column : 'username',
+						value : username
+					});
+					var model = api.require('model');
+					model.config({
+						appKey : '57B8FB26-4AC0-0803-FF7A-93CFDF2FDA3B'
+					});
+					model.findAll({
+						class : 'user',
+						qid : queryId
+					}, function(ret, err) {
+						if (ret) {
+							if (ret.length > 0) {
+								api.toast({
+									msg : '用户名已注册！',
+									location : 'middle',
+									duration : 3000,
+								});
+								isExist = true;
+								return;
+							}
+						}
+						if (err) {
+						}
+						isExist = false;
+					});
+				});
+			}
+
+			// 发短信验证码
+			function sendSms(o) {
+				setTimeout(function() {
+					if (!isExist) {
+						var username = $api.byId("username").value;
+						if (username != null && username.length == 11) {
+							var password = $api.byId('password').value;
+							var password2 = $api.byId('password2').value;
+							if (password == null || password !== password2) {
+								api.alert({
+									msg : '密码为空或两次密码不一致'
+								}, function(ret, err) {
+									return;
+								});
+								return;
+							}
+							time(o);
+							smsVerify.sms({
+								phone : username,
+							}, function(ret, err) {
+								if (ret.status) {
+									api.toast({
+										msg : '短信发送成功'
+									});
+								} else {
+									api.toast({
+										msg : JSON.stringify(err)
+									});
+								}
+							});
+						} else {
+							api.toast({
+								msg : '手机号输入有误！'
+							});
+						}
+					}
+				}, 1000)
+			};
+			var wait = 60;
+			function time(o) {
+				if (wait == 0) {
+					o.onclick = function() {
+						sendSms(o);
+					}
+					o.innerHTML = "获取验证码";
+					wait = 60;
+				} else {
+					o.onclick = function() {
+						return false;
+					};
+					o.innerHTML = "重新发送(" + wait + ")";
+					wait--;
+					setTimeout(function() {
+						time(o)
+					}, 1000)
+				}
+			}
+
+			// 校验验证码
+			function verify() {
+				api.showProgress({
+					title : '注册中...',
+					modal : false
+				});
+				var username = $api.byId("username").value;
+				var password = $api.byId('password').value;
+				var password2 = $api.byId('password2').value;
+				if (password !== password2) {
+					api.alert({
+						msg : '两次密码不一致'
+					}, function(ret, err) {
+						api.hideProgress();
+					});
+					return;
+				}
+				var code = document.getElementById("code").value;
+				_setStorage("photo", "http://7xsqm5.com1.z0.glb.clouddn.com/apicloud/459282aa35e47fbb1c676a6e5577cee8.jpg");
+				var photo = _getStorage("photo");
+				if (username.length == 11 && password.length >= 6) {
+					smsVerify.verify({
+						phone : username,
+						code : code,
+					}, function(ret, err) {
+						if (ret.status) {
+							api.showProgress({
+								title : '注册中...',
+								modal : false
+							});
+							
+							
+							var model = api.require('model');
+							model.config({
+								appKey : '57B8FB26-4AC0-0803-FF7A-93CFDF2FDA3B'
+							});
+							model.insert({
+								class : 'user',
+								value : {
+									username : username,
+									password : password,
+									photo : photo,
+									mobile : username
+								}
+							}, function(ret, err) {
+								var msg = "";
+								api.hideProgress();
+								if (ret) {
+									if (ret.username) {
+										api.toast({
+	                                        msg:'注册成功'
+                                        });
+                                        api.closeWin({
+                                        });
+									}
+								}
+							});
+						} else {
+							api.alert({
+								msg : ' 验证失败，请查看验证码是否正确！'
+							});
+						}
+					});
+				} else {
+					api.alert({
+						msg : '手机号或密码格式不正确'
+					});
+				}
+				api.hideProgress();
+			}
+		</script>
+	</body>
+</html>
