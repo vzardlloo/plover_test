@@ -1,7 +1,7 @@
 function confirm() {
 	var uid = $api.getStorage('uid');
 	//alert(uid);
-	var updateUserInfo = '/user/'+uid;
+	var updateUserInfo = '/user/'+ uid;
 	var bodyParam = {
 		username : $api.byId('username').value,
 		mobile : $api.byId('mobile').value,

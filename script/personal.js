@@ -2,10 +2,10 @@ var uiMediaScanner = null, imageFilter = null, imageBrowser = null, model = null
 var isIOS = false;
 //init personal center
 function initPersonalCenter(json) {
-	api.showProgress({
+	/*api.showProgress({
 		title : '加载中...',
 		modal : false
-	});
+	});*/
 	json = json || {};
 	if (!json.nickname) {
 		return;
@@ -29,8 +29,8 @@ function initPersonalCenter(json) {
 			if (user.photo) {
 				photo = user.photo;
 			}
-			var point = user.point || json.point;
-			var nickname = user.nickname || json.nickname;
+			//var point = user.point || json.point;
+			//var nickname = user.nickname || json.nickname;
 			pc.open({
 				y : 0,
 				height : 220,

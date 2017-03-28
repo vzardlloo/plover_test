@@ -90,7 +90,7 @@
 					bounces : false
 				}, {
 					name : 'myCart',
-					url : '',
+					url : 'html/product/category.html',
 					bounces : false
 				}, {
 					name : 'user',
@@ -110,8 +110,8 @@
 					$api.text($api.byId('header-title'), '服务预约');
 					$api.addCls($api.byId('tabbar2'), 'active-warning');
 				} else if (index == 2) {
-					//					$api.text($api.byId('header-title'), '购物车');
-					//					$api.addCls($api.byId('tabbar3'), 'active-warning');
+					$api.text($api.byId('header-title'), '飞手发布');
+					$api.addCls($api.byId('tabbar3'), 'active-warning');
 				} else if (index == 3) {
 					$api.text($api.byId('header-title'), '我');
 					$api.addCls($api.byId('tabbar4'), 'active-warning');
@@ -136,11 +136,7 @@
 					return;
 				}
 			}
-			if (name === "飞手发布") {
-				var param = {pid : ""};
-			    showMyCartsPage();
-				return;
-			}
+			
 			$api.text($api.byId('header-title'), name);
 			var footer = $api.byId('aui-footer');
 			var footerAct = $api.dom(footer, '.aui-bar-tab li.active-warning');
@@ -155,14 +151,14 @@
 		}
 		
 		
-		function showMyCartsPage(){
+		/*function showMyCartsPage(){
 			api.openWin({
 	            name: 'category',
-	            url: 'category.html'
+	            url: ''
             });
 		
 		
-		}
+		}*/
 		
 
 		var indexToDetail = function(title, url, itemId) {
