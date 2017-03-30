@@ -51,7 +51,9 @@ function imgCompress(imgsrc, quality, scale, ext, callback) {
 		}
 	}, function(ret, err) {
 		if (ret) {
-			callback(savePath + savename);
+			
+			
+			callback(savePath + savename+"上传成功！");
 		} else {
 			alert(JSON.stringify(err));
 		}

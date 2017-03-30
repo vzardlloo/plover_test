@@ -1,4 +1,4 @@
-var uiMediaScanner = null, imageFilter = null, imageBrowser = null, model = null;
+var uiMediaScanner = null, imageFilter = null, imageBrowser = null, model = null, nickname = "啄木鸟";
 var isIOS = false;
 //init personal center
 function initPersonalCenter(json) {
@@ -26,9 +26,9 @@ function initPersonalCenter(json) {
 			var user = ret[0];
 			var pc = api.require('personalCenter');
 			var photo = json.photo;
-			if (user.photo) {
-				photo = user.photo;
-			}
+			//if (user.photo) {
+				//photo = user.photo;
+			//}
 			//var point = user.point || json.point;
 			//var nickname = user.nickname || json.nickname;
 			pc.open({
@@ -57,7 +57,7 @@ function initPersonalCenter(json) {
 					bgImg : 'widget://image/personal_btn_nor.png',
 					lightImg : 'widget://image/personal_btn_light.png',
 					selectedImg : 'widget://image/personal_btn_sele.png',
-					title : '待发货',
+					//title : '待发货',
 					titleColor : '#ffffff',
 					titleLightColor : '#55abce',
 					countColor : '#ffffff',
@@ -75,7 +75,7 @@ function initPersonalCenter(json) {
 					bgImg : 'widget://image/personal_btn_nor.png',
 					lightImg : 'widget://image/personal_btn_light.png',
 					selectedImg : 'widget://image/personal_btn_sele.png',
-					title : '待评价',
+					//title : '待评价',
 					titleColor : '#ffffff',
 					titleLightColor : '#55abce',
 					countColor : '#ffffff',
