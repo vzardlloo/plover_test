@@ -65,7 +65,7 @@
 			.aui-list-view i.aui-iconfont {
 				margin-right: 0;
 			}
-			.box [class*=aui-flex-]:not(.aui-flex-col) {
+			.box [class * = aui-flex-]:not(.aui-flex-col) {
 			background-color: rgba(26, 188, 156, 0.5);
 			color: #ffffff;
 			font-size: 12px;
@@ -85,153 +85,12 @@
 		</style>
 	</head>
 	<body>
-		<div id="aui-slide">
+		<!--div id="aui-slide">
 			<div class="aui-slide-wrap" id="bannerinfo"></div>
 			<div class="aui-slide-page-wrap">
-			</div>
+			</div-->
 		</div>
-		<!--<div class="aui-content">
-		<ul class="aui-grid-sixteen">
-		<li class="aui-col-xs-3 aui-text-center">
-		<span class="aui-iconfont aui-icon-profilefill aui-bg-success"></span>
-		<p>
-		全部商品
-		</p>
-		</li>
-		<li class="aui-col-xs-3 aui-text-center">
-		<span class="aui-iconfont aui-icon-creativefill aui-bg-warning"></span>
-		<p>
-		积分兑换
-		</p>
-		</li>
-		<li class="aui-col-xs-3 aui-text-center">
-		<span class="aui-iconfont aui-icon-apps aui-bg-danger"></span>
-		<p>
-		新品促销
-		</p>
-		</li>
-		<li class="aui-col-xs-3 aui-text-center">
-		<span class="aui-iconfont aui-icon-countdownfill aui-bg-info"></span>
-		<p>
-		热门推荐
-		</p>
-		</li>
-		</ul>
-		</div>-->
-		<!--div class="box bottom nobg ">
-			<div class="aui-flex-col aui-flex-center aui-border-tb">
-				<div class="aui-flex-item-4 aui-flex-row aui-flex-middle aui-padded-10" data-url="http://temai.m.taobao.com/cheap.htm?pt=1&pid=mm_46571459_14892767_58278607" tapmode onclick="toDetail(this);">
-					<h3 class="aui-text-danger">9块9</h3>
-					<p>
-						特价产品全包罗
-					</p>
-					<img src="../../image/f0.png">
-				</div>
-				<div class="aui-flex-item-8 aui-border-l">
-					<div class="aui-flex-col aui-padded-10 aui-border-b" data-url="http://ai.m.taobao.com?pid=mm_46571459_14892767_58304814" tapmode onclick="toDetail(this);">
-						<div class="aui-flex-item-12">
-							<div class="aui-flex-item-9">
-								<h3 class="aui-text-info">爱淘宝</h3>
-								<p>
-									好品味从挑剔开始
-								</p>
-							</div>
-							<div class="aui-flex-item-3 aui-text-right"><img src="../../image/f3.png">
-							</div>
-						</div>
-					</div>
-					<div class="aui-flex-col">
-						<div class="aui-flex-item-6 aui-padded-10" style="position: relative;" data-url="http://s.click.taobao.com/t?e=m%3D2%26s%3DWscJYV263lYcQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAvySJ3YDLTwoGYhSbg4zrH9AFEHVckI7b22AC4yOibZzj5QwTervQtm0VxWHoneb%2BMLXcLizgwqd8fJdxpblPNxt6G6GIpV8OJ36%2BaxL0nS66jQFxlZYhFgS%2FlLdrfM2AaJn5AyUbPoV&pid=mm_46571459_15034243_59320044" tapmode onclick="toDetail(this);">
-							<h5 class="aui-text-warning">聚划算</h5>
-							<p>
-								疯狂赛车来袭
-							</p>
-							<img src="../../image/f1.png">
-						</div>
-						
-						<div class="aui-flex-item-6 aui-padded-10 aui-border-l" data-url="http://ai.m.taobao.com/bu.html?id=1&pid=mm_46571459_15034243_59310053" tapmode onclick="toDetail(this);">
-							<h5 class="aui-text-success">天天特价</h5>
-							<p>
-								都帮你整理好啦
-							</p>
-							<img src="../../image/f2.png">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--div class="aui-content">
-			<ul class="aui-list-view aui-grid-view" id="product-list"></ul>
-		</div-->
-		<!--div class="aui-content box">
-			<div class="aui-line-x"></div>
-			<div class="box-title">
-				今日特价
-			</div>
-			<ul class="aui-list-view aui-grid-view" id="todayRecom-list"></ul>
-			<div class="aui-line-x"></div>
-		</div>
-		<div class="aui-content box">
-			<div class="aui-line-x"></div>
-			<div class="box-title">
-				热门商品
-			</div>
-			<ul class="aui-list-view aui-grid-view" id="hotproduct-list"></ul>
-			<div class="aui-line-x"></div>
-		</div-->
-	<!--/body>
-	<script id="bannerinfo-template" type="text/x-dot-template">
-		{{for(var i=0; i< it.length; i++){}}
-		<div class="aui-slide-node bg-dark" data-url="{{=it[i].link}}" data-title="{{=it[i].title}}" onclick="toDetail(this);">
-		<img src="{{=it[i].pic.url}}" alt="{{=it[i].alt}}" />
-		</div>
-		{{}}}
-	</script>
-	<script id="product-list-template" type="text/x-dot-template">
-		{{for(var i=0; i< it.length; i++){}}
-		<li class="aui-list-view-cell aui-img aui-col-xs-4" data-url="{{=it[i].click_url}}" tapmode onclick="toDetail(this);">
-		<img class="aui-img-object lazy" src="../../image/gray.jpg" data-original="{{=it[i].pict_url}}">
-		<div class="aui-img-body aui-text-left">
-		<p class="aui-ellipsis-2">
-		{{=it[i].title}}
-		</p>
-		<p>
-		<span class="goods-price aui-text-danger">¥<strong>{{=it[i].zk_final_price}}</strong>元</span>
-		</p>
-		</div>
-		</li>
-		{{}}}
-	</script>
-	<script id="todayRecom-list-template" type="text/x-dot-template">
-		{{for(var i=0; i< it.length; i++){}}
-		<li class="aui-list-view-cell aui-img aui-col-xs-6" data-url="{{=it[i].click_url}}" tapmode onclick="toDetail(this);">
-		<img class="aui-img-object lazy" src="../../image/gray.jpg" data-original="{{=it[i].pict_url}}">
-		<div class="aui-img-body aui-text-left">
-		<p class="aui-ellipsis-2">
-		{{=it[i].title}}
-		</p>
-		<p>
-		<span class="goods-price aui-text-danger">¥<strong>{{=it[i].zk_final_price}}</strong>元</span>
-		</p>
-		</div>
-		</li>
-		{{}}}
-	</script>
-	<script id="hotproduct-list-template" type="text/x-dot-template">
-		{{for(var i=0; i< it.length; i++){}}
-		<li class="aui-list-view-cell aui-img aui-col-xs-6" data-url="{{=it[i].click_url}}" tapmode onclick="toDetail(this);">
-		<img class="aui-img-object lazy" src="../../image/gray.jpg" data-original="{{=it[i].pict_url}}">
-		<div class="aui-img-body aui-text-left">
-		<p class="aui-ellipsis-2">
-		{{=it[i].title}}
-		</p>
-		<p>
-		<span class="goods-price aui-text-danger">¥<strong>{{=it[i].zk_final_price}}</strong>元</span>
-		</p>
-		</div>
-		</li>
-		{{}}}
-	</script-->
+		
 	<script type="text/javascript" src="../../script/api.js"></script>
 	<script type="text/javascript" src="../../script/aui-slide.js"></script>
 	<script type="text/javascript" src="../../script/banner.js"></script>
@@ -240,111 +99,19 @@
 	<script type="text/javascript" src="../../script/common.js"></script>
 	<script type="text/javascript" src="../../script/jquery.min.js"></script>
 	<script type="text/javascript" src="../../script/jquery.lazyload.min.js"></script>
-	<!--script type="text/javascript">
-		apiready = function() {
-			api.parseTapmode();
-			getBanner("main", "order ASC");
-			getProduct();
-			getTodayRecom();
-			getHotProduct();
-			api.setRefreshHeaderInfo({
-				visible : true,
-				// loadingImgae: 'wgt://image/refresh-white.png',
-				bgColor : '#f2f2f2',
-				textColor : '#4d4d4d',
-				textDown : '下拉刷新...',
-				textUp : '松开刷新...',
-				showTime : true
-			}, function(ret, err) {
-				getBanner("main", "order ASC");
-				getProduct();
-				getTodayRecom();
-				getHotProduct();
-				api.refreshHeaderLoadDone();
-			});
-		}
-		function getProduct() {
-			window.product = factory("tbk_product");
-			product.query({
-				filter : {
-					"order" : "sort ASC",
-					"limit" : 6
-				}
-			}, function(ret, err) {
-				if (ret) {
-					var productinfo = $api.byId("product-list");
-					var tpl = $api.byId("product-list-template").text;
-					var tempFn = doT.template(tpl);
-					productinfo.innerHTML = tempFn(ret);
-					$("img.lazy").lazyload({
-						effect : 'fadeIn',
-						threshold : '50'
-					});
-				}
-			});
-		}
-
-		function getTodayRecom() {
-			window.product = factory("tbk_product");
-			product.query({
-				filter : {
-					where : {
-						"category" : "今日特价"
-					},
-					"order" : "sort ASC",
-					"limit" : 4
-				}
-			}, function(ret, err) {
-				if (ret) {
-					var productinfo = $api.byId("todayRecom-list");
-					var tpl = $api.byId("todayRecom-list-template").text;
-					var tempFn = doT.template(tpl);
-					productinfo.innerHTML = tempFn(ret);
-					$("img.lazy").lazyload({
-						effect : 'fadeIn',
-						threshold : '50'
-					});
-				}
-			});
-		}
-
-		function getHotProduct() {
-			window.product = factory("tbk_product");
-			product.query({
-				filter : {
-					where : {
-						"category" : "热门商品"
-					},
-					"order" : "sort ASC",
-					"limit" : 4
-				}
-			}, function(ret, err) {
-				if (ret) {
-					var productinfo = $api.byId("hotproduct-list");
-					var tpl = $api.byId("hotproduct-list-template").text;
-					var tempFn = doT.template(tpl);
-					productinfo.innerHTML = tempFn(ret);
-					$("img.lazy").lazyload({
-						effect : 'fadeIn',
-						threshold : '50'
-					});
-				}
-			});
-		}
-
-//		function openDidi() {
-//			var didi = api.require('didi');
-//			alert(didi);
-//			didi.registerApp(function(ret, err) {
-//				if (ret) {
-//					var param = {
-//						phone : '15121000071',
-//						biz : '1',
-//						maptype : 'baidu'
-//					};
-//					didi.showDDPage(param);
-//				}
-//			});
-//		}
-	</script-->
+	<script type="text/javascript">
+	window.apiready = function(){
+                api.openFrame({
+                        name:'main',
+                    url: 'http://www.ploveruav.com',
+                    rect: {
+                            x:0,             
+                            y:65             
+                        },
+                    vScrollBarEnabled : true,
+                    hScrollBarEnabled : true
+                });
+        }
+		
+	</script>
 </html>
