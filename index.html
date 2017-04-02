@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<title>index</title>
+		<title>啄木鸟飞防助手</title>
 		<link rel="stylesheet" type="text/css" href="./css/aui.css" />
 		<!--拓展AUI字体图标-->
 		<link rel="stylesheet" type="text/css" href="./css/iconfont/iconfont.css" />
@@ -12,30 +12,30 @@
 		<header class="aui-bar aui-bar-nav aui-bar-danger" id="aui-header">
 			<a class="aui-btn aui-btn-danger aui-pull-left" tapmode onclick="closeWin()"> <span class="aui-iconfont aui-icon-left"></span> </a>
 			<div class="aui-title" id="header-title">
-				首页
+				啄木鸟飞防助手
 			</div>
 		</header>
 		<footer class="aui-nav" id="aui-footer">  
 			<ul class="aui-bar-tab">
-				<li class="active-warning" id="tabbar1" tapmode onclick="randomSwitchBtn(this,'首页',0)">
+				<li class="active-warning" id="tabbar1" tapmode onclick="randomSwitchBtn(this,'broadcast',0)">
 					<span class="aui-iconfont aui-icon-home"></span>
 					<p>
-						首页
+						广播站
 					</p>
 				</li>
-				<li id="tabbar2" tapmode onclick="randomSwitchBtn(this,'服务预约',1)">
+				<li id="tabbar2" tapmode onclick="randomSwitchBtn(this,'jobs',1)">
 					<span class="aui-iconfont aui-icon-apps"></span>
 					<p>
-						服务预约
+						工作
 					</p>
 				</li>
-				<li id="tabbar3" tapmode onclick="randomSwitchBtn(this,'飞手发布',2)">
+				<li id="tabbar3" tapmode onclick="randomSwitchBtn(this,'management',2)">
 					<span class="aui-iconfont aui-icon-cart"></span>
 					<p>
-						飞手发布
+						管理
 					</p>
 				</li>
-				<li id="tabbar4" tapmode onclick="randomSwitchBtn(this,'我',3)">
+				<li id="tabbar4" tapmode onclick="randomSwitchBtn(this,'mine',3)">
 					<span class="aui-iconfont aui-icon-my"></span>
 					<p>
 						我
@@ -122,9 +122,26 @@
 			api.closeWin();
 		}
 
-		function randomSwitchBtn(obj, name, index) {
-			if (name === '我') {
-				//login
+		function randomSwitchBtn(obj, name, index){
+			if(name === "broadcast"){
+				api.openWin({
+					name: "broadcast",
+					url: "html/broadcast/index.html",
+				})
+			}
+			if(name === "jobs"){
+				api.openWin({
+					name: "jobs",
+					url: "html/jobs/index.html",
+				})
+			}
+			if(name === "management"){
+				api.openWin({
+					name: "management",
+					url: "html/managment/index.html",
+				})
+			}
+			if(name === "mine"){
 				var uid = $api.getStorage('uid');
 				if (!uid) {
 					api.openWin({
